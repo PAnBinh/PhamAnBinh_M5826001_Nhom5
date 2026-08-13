@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -9,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -30,7 +29,7 @@
       --border:        #e2e8f0;
       --shadow:        0 4px 24px rgba(26,58,107,.10);
       --shadow-hover:  0 12px 36px rgba(26,58,107,.18);
-      --radius:        14px;
+      --radius:        16px;
       --transition:    .35s cubic-bezier(.4,0,.2,1);
     }
 
@@ -58,6 +57,7 @@
       color: var(--text-main);
       line-height: 1.7;
       transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
     }
 
     h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
@@ -91,12 +91,17 @@
       background: var(--accent);
       border-radius: 2px;
       margin: .5rem auto 0;
+      transition: width 0.4s ease, background-color 0.4s ease;
     }
 
-    section { padding: 80px 0; }
+    .section-title:hover::after {
+      width: 90px;
+    }
+
+    section { padding: 90px 0; position: relative; }
 
     .container {
-      max-width: 1100px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 0 24px;
     }
@@ -116,7 +121,7 @@
     #header.scrolled {
       background: rgba(248,250,252,.92);
       backdrop-filter: blur(12px);
-      box-shadow: 0 2px 16px rgba(26,58,107,.10);
+      box-shadow: 0 4px 20px rgba(26,58,107,.08);
       padding: 10px 0;
     }
     body.dark-mode #header.scrolled {
@@ -132,9 +137,13 @@
     .nav-logo {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: var(--primary);
       letter-spacing: -.5px;
+      transition: transform 0.3s ease;
+    }
+    .nav-logo:hover {
+      transform: scale(1.03);
     }
     body.dark-mode .nav-logo { color: #7eb3ff; }
 
@@ -174,9 +183,9 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: border-color var(--transition), color var(--transition);
+      transition: border-color var(--transition), color var(--transition), transform 0.2s ease;
     }
-    #darkToggle:hover { border-color: var(--accent); color: var(--accent); }
+    #darkToggle:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.05); }
 
     /* Hamburger (mobile) */
     .hamburger {
@@ -222,7 +231,6 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      /* Gradient tinh tế xanh navy → trắng */
       background: linear-gradient(135deg, #e8f0fe 0%, #f8fafc 50%, #fef3e8 100%);
       padding-top: 90px;
       position: relative;
@@ -232,7 +240,6 @@
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #1a1a2e 100%);
     }
 
-    /* Pattern dots tinh tế */
     #hero::before {
       content: '';
       position: absolute;
@@ -249,7 +256,6 @@
       gap: 48px;
     }
 
-    /* Hiệu ứng fade-in khi load */
     .hero-text {
       flex: 1;
       opacity: 0;
@@ -268,6 +274,10 @@
       letter-spacing: .5px;
       margin-bottom: 18px;
       text-transform: uppercase;
+      transition: transform 0.3s ease;
+    }
+    .hero-badge:hover {
+      transform: translateY(-2px);
     }
 
     .hero-text h1 {
@@ -291,7 +301,6 @@
       flex-wrap: wrap;
     }
 
-    /* Nút CTA chính */
     .btn-primary {
       background: var(--primary);
       color: #fff;
@@ -307,11 +316,10 @@
     }
     .btn-primary:hover {
       background: var(--primary-light);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       box-shadow: 0 8px 24px rgba(26,58,107,.35);
     }
 
-    /* Nút CTA phụ */
     .btn-accent {
       background: var(--accent);
       color: #fff;
@@ -327,11 +335,11 @@
     }
     .btn-accent:hover {
       background: var(--accent-hover);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       box-shadow: 0 8px 24px rgba(249,115,22,.45);
     }
 
-    /* Ảnh đại diện bên phải */
+    /* Ảnh đại diện với Floating & Tilt Animation */
     .hero-image {
       flex: 0 0 auto;
       opacity: 0;
@@ -342,8 +350,10 @@
     .avatar-wrap {
       position: relative;
       width: 280px; height: 280px;
+      animation: floatAvatar 6s ease-in-out infinite;
+      perspective: 1000px;
     }
-    /* Vòng trang trí */
+    
     .avatar-wrap::before {
       content: '';
       position: absolute;
@@ -367,9 +377,12 @@
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid var(--bg-card);
+      transition: transform 0.5s ease;
+    }
+    .avatar-wrap:hover img {
+      transform: scale(1.05) rotate(2deg);
     }
 
-    /* Thông tin nhỏ góc avatar */
     .avatar-info {
       position: absolute;
       bottom: 10px; right: -18px;
@@ -385,6 +398,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      animation: bounceSoft 3s ease-in-out infinite;
     }
     body.dark-mode .avatar-info { color: #7eb3ff; }
     .avatar-info i { color: var(--accent); }
@@ -396,38 +410,48 @@
 
     .about-text {
       max-width: 760px;
-      margin: 0 auto 3rem;
+      margin: 0 auto 3.5rem;
       text-align: center;
       color: var(--text-muted);
       font-size: 1rem;
       line-height: 1.85;
+      /* Scroll Reveal */
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .about-text.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .edu-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      gap: 28px;
     }
 
     .edu-card {
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 28px;
+      padding: 30px;
       position: relative;
       overflow: hidden;
-      transition: transform var(--transition), box-shadow var(--transition);
-      /* Scroll animation – ẩn ban đầu */
+      /* Distinct Scroll Reveal Effect: Slide in from Left/Right */
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateX(-40px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow var(--transition);
+    }
+    .edu-card:nth-child(even) {
+      transform: translateX(40px);
     }
     .edu-card.visible {
       opacity: 1;
-      transform: translateY(0);
-      transition: opacity .6s ease, transform .6s ease, box-shadow var(--transition);
+      transform: translateX(0);
     }
     .edu-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-8px) scale(1.02) !important;
       box-shadow: var(--shadow-hover);
     }
 
@@ -438,22 +462,30 @@
       width: 5px; height: 100%;
       background: linear-gradient(to bottom, var(--primary), var(--accent));
       border-radius: 3px 0 0 3px;
+      transition: width 0.3s ease;
+    }
+    .edu-card:hover::before {
+      width: 8px;
     }
 
     .edu-icon {
-      width: 48px; height: 48px;
+      width: 52px; height: 52px;
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border-radius: 12px;
+      border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       color: #fff;
-      font-size: 1.2rem;
-      margin-bottom: 16px;
+      font-size: 1.3rem;
+      margin-bottom: 18px;
+      transition: transform 0.4s ease;
+    }
+    .edu-card:hover .edu-icon {
+      transform: rotate(10deg) scale(1.1);
     }
 
     .edu-card h3 {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       color: var(--primary);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     body.dark-mode .edu-card h3 { color: #7eb3ff; }
 
@@ -465,64 +497,123 @@
 
     .edu-badge {
       display: inline-block;
-      margin-top: 10px;
+      margin-top: 12px;
       background: rgba(249,115,22,.12);
       color: var(--accent);
-      padding: 3px 10px;
+      padding: 4px 12px;
       border-radius: 50px;
       font-size: .75rem;
       font-weight: 600;
     }
 
     /* =============================================
-       3. KỸ NĂNG
+       3. KỸ NĂNG CHUYÊN MÔN (Bố cục 6 thẻ độc đáo)
     ============================================= */
     #skills { background: var(--bg); }
 
+    /* Modern Asymmetrical Dynamic Grid Layout */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 22px;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
     }
 
+    /* Thẻ 1: Tin học căn bản (Span 7) */
+    .skill-card:nth-child(1) { grid-column: span 7; }
+    /* Thẻ 2: Tiếng Anh (Span 5) */
+    .skill-card:nth-child(2) { grid-column: span 5; }
+    /* Thẻ 3: Tư duy (Span 5) */
+    .skill-card:nth-child(3) { grid-column: span 5; }
+    /* Thẻ 4: Ứng dụng CNTT (Span 7) */
+    .skill-card:nth-child(4) { grid-column: span 7; }
+    /* Thẻ 5: Soạn đề (Span 6) */
+    .skill-card:nth-child(5) { grid-column: span 6; }
+    /* Thẻ 6: Thiết kế giáo án (Span 6) */
+    .skill-card:nth-child(6) { grid-column: span 6; }
+
+    /* Thẻ Kỹ năng - Nâng cấp hiệu ứng & Thiết kế Glassmorphism & Hover Accent */
     .skill-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 26px 22px;
+      padding: 30px 26px;
       cursor: default;
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
-    }
-    .skill-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-hover);
-      border-color: var(--primary-light);
-      background: linear-gradient(135deg, #eef4ff, #ffffff);
-    }
-    body.dark-mode .skill-card:hover {
-      background: linear-gradient(135deg, #1e2d47, #1e293b);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      /* Scroll Reveal Unique Zoom/Pop-in Effect */
+      opacity: 0;
+      transform: scale(0.85) translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  box-shadow var(--transition), 
+                  border-color var(--transition), 
+                  background var(--transition);
     }
 
-    .skill-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.35rem;
-      color: #fff;
+    .skill-card.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Hiệu ứng viền phát sáng & dải trang trí trên hover */
+    .skill-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-8px) !important;
+      box-shadow: 0 16px 36px rgba(26,58,107,.14);
+      border-color: rgba(249,115,22,0.4);
+    }
+    .skill-card:hover::after {
+      opacity: 1;
+    }
+
+    .skill-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
       margin-bottom: 14px;
     }
 
+    .skill-icon {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.45rem;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .skill-card:hover .skill-icon {
+      transform: scale(1.15) rotate(-6deg);
+    }
+
     .skill-card h3 {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--primary);
-      margin-bottom: 6px;
+      font-weight: 700;
+      line-height: 1.3;
     }
     body.dark-mode .skill-card h3 { color: #a5c8ff; }
 
     .skill-card p {
-      font-size: .84rem;
+      font-size: .88rem;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.65;
+      position: relative;
+      z-index: 1;
     }
 
     /* =============================================
@@ -533,40 +624,53 @@
     .exp-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+      gap: 28px;
     }
 
     .exp-card {
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 30px 26px;
-      transition: transform var(--transition), box-shadow var(--transition);
+      padding: 34px 28px;
+      position: relative;
+      /* Scroll Reveal Unique Flip / Rotate Effect */
+      opacity: 0;
+      transform: perspective(1000px) rotateX(25deg) translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease, box-shadow var(--transition);
+    }
+    .exp-card.visible {
+      opacity: 1;
+      transform: perspective(1000px) rotateX(0deg) translateY(0);
     }
     .exp-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px) !important;
       box-shadow: var(--shadow-hover);
     }
 
     .exp-header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
+      gap: 16px;
+      margin-bottom: 22px;
     }
 
     .exp-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
+      width: 54px; height: 54px;
+      border-radius: 16px;
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       display: flex; align-items: center; justify-content: center;
       color: #fff;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       flex-shrink: 0;
+      box-shadow: 0 6px 16px rgba(26,58,107,.2);
+      transition: transform 0.4s ease;
+    }
+    .exp-card:hover .exp-icon {
+      transform: scale(1.1) rotate(5deg);
     }
 
     .exp-header h3 {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--primary);
     }
     body.dark-mode .exp-header h3 { color: #7eb3ff; }
@@ -575,13 +679,14 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
     .exp-card ul li {
       display: flex;
-      gap: 10px;
-      font-size: .9rem;
+      gap: 12px;
+      font-size: .92rem;
       color: var(--text-muted);
+      line-height: 1.6;
     }
     .exp-card ul li::before {
       content: '\f058';
@@ -590,6 +695,10 @@
       color: var(--accent);
       flex-shrink: 0;
       margin-top: 2px;
+      transition: transform 0.3s ease;
+    }
+    .exp-card ul li:hover::before {
+      transform: scale(1.3);
     }
 
     /* =============================================
@@ -600,40 +709,54 @@
     .goals-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+      gap: 28px;
     }
 
     .goal-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 30px 26px;
-      transition: transform var(--transition), box-shadow var(--transition);
+      padding: 34px 28px;
+      /* Scroll Reveal Blur & Fade Effect */
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(35px);
+      transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease, box-shadow var(--transition);
+    }
+    .goal-card.visible {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
     }
     .goal-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px) !important;
       box-shadow: var(--shadow-hover);
     }
 
     .goal-card .goal-header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
+      gap: 16px;
+      margin-bottom: 22px;
     }
 
     .goal-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
+      width: 54px; height: 54px;
+      border-radius: 16px;
       background: linear-gradient(135deg, var(--accent), #fb923c);
       display: flex; align-items: center; justify-content: center;
       color: #fff;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       flex-shrink: 0;
+      box-shadow: 0 6px 16px rgba(249,115,22,.25);
+      transition: transform 0.4s ease;
+    }
+    .goal-card:hover .goal-icon {
+      transform: scale(1.1) rotate(-5deg);
     }
 
     .goal-card h3 {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--primary);
     }
     body.dark-mode .goal-card h3 { color: #7eb3ff; }
@@ -642,13 +765,14 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
     .goal-card ul li {
       display: flex;
-      gap: 10px;
-      font-size: .9rem;
+      gap: 12px;
+      font-size: .92rem;
       color: var(--text-muted);
+      line-height: 1.6;
     }
     .goal-card ul li::before {
       content: '\f00c';
@@ -657,6 +781,10 @@
       color: var(--accent);
       flex-shrink: 0;
       margin-top: 2px;
+      transition: transform 0.3s ease;
+    }
+    .goal-card ul li:hover::before {
+      transform: scale(1.3);
     }
 
     /* =============================================
@@ -665,63 +793,72 @@
     #contact {
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       color: #fff;
-      padding: 80px 0;
+      padding: 90px 0;
+      overflow: hidden;
     }
 
     #contact .section-title { color: #fff; }
     #contact .section-title::after { background: var(--accent); }
-    #contact .section-subtitle { color: rgba(255,255,255,.75); }
+    #contact .section-subtitle { color: rgba(255,255,255,.8); }
 
     .contact-cards {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 28px;
       margin-top: 0;
     }
 
     .contact-item {
       background: rgba(255,255,255,.12);
       border: 1px solid rgba(255,255,255,.2);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
       border-radius: var(--radius);
-      padding: 28px 32px;
+      padding: 32px 36px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       text-align: center;
-      transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
-      min-width: 180px;
+      min-width: 200px;
       cursor: pointer;
       text-decoration: none;
       color: #fff;
+      /* Scroll Reveal Stagger Pop Effect */
+      opacity: 0;
+      transform: translateY(40px) scale(0.9);
+      transition: opacity 0.6s ease, transform 0.6s ease, background var(--transition), box-shadow var(--transition);
+    }
+    .contact-item.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
     .contact-item:hover {
-      transform: translateY(-6px);
-      background: rgba(255,255,255,.22);
-      box-shadow: 0 16px 40px rgba(0,0,0,.25);
+      transform: translateY(-8px) scale(1.03) !important;
+      background: rgba(255,255,255,.24);
+      box-shadow: 0 20px 40px rgba(0,0,0,.3);
     }
 
     .contact-item .ci-icon {
-      width: 58px; height: 58px;
+      width: 64px; height: 64px;
       border-radius: 50%;
       background: rgba(255,255,255,.15);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-      transition: background var(--transition);
+      font-size: 1.6rem;
+      transition: background var(--transition), transform 0.4s ease;
     }
     .contact-item:hover .ci-icon {
       background: var(--accent);
+      transform: rotate(360deg);
     }
 
     .contact-item .ci-label {
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
     .contact-item .ci-value {
-      font-size: .85rem;
-      opacity: .8;
+      font-size: .88rem;
+      opacity: .85;
     }
 
     /* =============================================
@@ -731,13 +868,13 @@
       background: #0f172a;
       color: rgba(255,255,255,.6);
       text-align: center;
-      padding: 22px 24px;
-      font-size: .85rem;
+      padding: 24px;
+      font-size: .88rem;
     }
     footer span { color: var(--accent); }
 
     /* =============================================
-       KEYFRAMES
+       KEYFRAMES ANIMATIONS
     ============================================= */
     @keyframes fadeInUp {
       to { opacity: 1; transform: translateY(0); }
@@ -748,16 +885,39 @@
     @keyframes spinSlow {
       to { transform: rotate(360deg); }
     }
+    @keyframes floatAvatar {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes bounceSoft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
 
     /* =============================================
-       RESPONSIVE
+       RESPONSIVE DESIGN
     ============================================= */
+    /* Laptop / Tablet lớn */
+    @media (max-width: 992px) {
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .skill-card:nth-child(1),
+      .skill-card:nth-child(2),
+      .skill-card:nth-child(3),
+      .skill-card:nth-child(4),
+      .skill-card:nth-child(5),
+      .skill-card:nth-child(6) {
+        grid-column: span 1;
+      }
+    }
+
     /* Tablet */
     @media (max-width: 900px) {
       .hero-inner { flex-direction: column-reverse; text-align: center; }
       .hero-text .tagline { margin-left: auto; margin-right: auto; }
       .hero-btns { justify-content: center; }
-      .avatar-wrap { width: 220px; height: 220px; }
+      .avatar-wrap { width: 240px; height: 240px; }
       .avatar-info { right: -8px; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
@@ -765,11 +925,11 @@
 
     /* Mobile */
     @media (max-width: 600px) {
-      section { padding: 56px 0; }
-      .avatar-wrap { width: 180px; height: 180px; }
+      section { padding: 60px 0; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .avatar-wrap { width: 200px; height: 200px; }
       .avatar-info { display: none; }
       .edu-cards, .exp-cards, .goals-cards { grid-template-columns: 1fr; }
-      .skills-grid { grid-template-columns: 1fr; }
       .contact-cards { flex-direction: column; align-items: center; }
       .contact-item { width: 100%; max-width: 320px; }
     }
@@ -890,7 +1050,7 @@
       <p class="section-subtitle">Đôi nét về bản thân</p>
 
       <!-- Đoạn giới thiệu bản thân -->
-      <p class="about-text">
+      <p class="about-text" data-scroll="fade">
         Tôi là một giáo viên &amp; gia sư Toán với chuyên môn vững vàng và tinh thần không 
         ngừng đổi mới. Tốt nghiệp ngành Sư phạm Toán học tại Đại học Cần Thơ, tôi
         không ngừng học hỏi và hiện đang theo học Chương trình Cao học Toán ứng dụng
@@ -903,7 +1063,7 @@
       <div class="edu-cards">
 
         <!-- Thẻ Đại học -->
-        <div class="edu-card" data-scroll>
+        <div class="edu-card" data-scroll="slide-left">
           <div class="edu-icon">
             <i class="fa-solid fa-graduation-cap"></i>
           </div>
@@ -917,7 +1077,7 @@
         </div>
 
         <!-- Thẻ Cao học -->
-        <div class="edu-card" data-scroll>
+        <div class="edu-card" data-scroll="slide-right">
           <div class="edu-icon" style="background: linear-gradient(135deg, var(--accent), #fb923c);">
             <i class="fa-solid fa-book-open-reader"></i>
           </div>
@@ -948,56 +1108,68 @@
       <div class="skills-grid">
 
         <!-- Kỹ năng 1: Tin học căn bản -->
-        <div class="skill-card">
-          <div class="skill-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
-            <i class="fa-solid fa-computer"></i>
+        <div class="skill-card" data-scroll="zoom">
+          <div class="skill-top">
+            <div class="skill-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+              <i class="fa-solid fa-computer"></i>
+            </div>
+            <h3>Tin học căn bản</h3>
           </div>
-          <h3>Tin học căn bản</h3>
           <p>Chứng chỉ Tin học căn bản. Thành thạo các công cụ văn phòng Word, Excel, PowerPoint phục vụ soạn thảo và quản lý tài liệu giáo dục.</p>
         </div>
 
         <!-- Kỹ năng 2: Tiếng Anh -->
-        <div class="skill-card">
-          <div class="skill-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
-            <i class="fa-solid fa-language"></i>
+        <div class="skill-card" data-scroll="zoom">
+          <div class="skill-top">
+            <div class="skill-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+              <i class="fa-solid fa-language"></i>
+            </div>
+            <h3>Tiếng Anh B1 (Bậc 3)</h3>
           </div>
-          <h3>Tiếng Anh B1 (Bậc 3)</h3>
           <p>Chứng chỉ Tiếng Anh B1 theo khung năng lực ngoại ngữ. Có khả năng đọc hiểu tài liệu chuyên ngành Toán bằng tiếng Anh.</p>
         </div>
 
         <!-- Kỹ năng 3: Tư duy & Kỹ năng mềm -->
-        <div class="skill-card">
-          <div class="skill-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
-            <i class="fa-solid fa-brain"></i>
+        <div class="skill-card" data-scroll="zoom">
+          <div class="skill-top">
+            <div class="skill-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <h3>Tư duy &amp; Kỹ năng mềm</h3>
           </div>
-          <h3>Tư duy &amp; Kỹ năng mềm</h3>
           <p>Tư duy logic sắc bén, diễn đạt rõ ràng, làm việc nhóm hiệu quả và có tinh thần trách nhiệm cao trong mọi công việc.</p>
         </div>
 
         <!-- Kỹ năng 4: Ứng dụng CNTT -->
-        <div class="skill-card">
-          <div class="skill-icon" style="background: linear-gradient(135deg, #f97316, #ea580c);">
-            <i class="fa-solid fa-chalkboard"></i>
+        <div class="skill-card" data-scroll="zoom">
+          <div class="skill-top">
+            <div class="skill-icon" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+              <i class="fa-solid fa-chalkboard"></i>
+            </div>
+            <h3>Ứng dụng CNTT vào giảng dạy</h3>
           </div>
-          <h3>Ứng dụng CNTT vào giảng dạy</h3>
           <p>Sử dụng thành thạo GeoGebra, PowerPoint, các nền tảng học trực tuyến để thiết kế bài giảng sinh động và quản lý lớp học hiệu quả.</p>
         </div>
 
-        <!-- Kỹ năng 5 (gợi ý): Soạn thảo đề kiểm tra & đánh giá -->
-        <div class="skill-card">
-          <div class="skill-icon" style="background: linear-gradient(135deg, #ec4899, #be185d);">
-            <i class="fa-solid fa-pen-to-square"></i>
+        <!-- Kỹ năng 5: Soạn đề & Đánh giá -->
+        <div class="skill-card" data-scroll="zoom">
+          <div class="skill-top">
+            <div class="skill-icon" style="background: linear-gradient(135deg, #ec4899, #be185d);">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+            <h3>Soạn đề &amp; Đánh giá học sinh</h3>
           </div>
-          <h3>Soạn đề &amp; Đánh giá học sinh</h3>
           <p>Có kinh nghiệm xây dựng ma trận đề, soạn đề kiểm tra đa dạng theo chuẩn chương trình THCS và THPT, đánh giá năng lực học sinh khách quan.</p>
         </div>
 
-        <!-- Kỹ năng 6 (gợi ý): Thiết kế kế hoạch bài dạy -->
-        <div class="skill-card">
-          <div class="skill-icon" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
-            <i class="fa-solid fa-book-bookmark"></i>
+        <!-- Kỹ năng 6: Thiết kế giáo án -->
+        <div class="skill-card" data-scroll="zoom">
+          <div class="skill-top">
+            <div class="skill-icon" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+              <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <h3>Thiết kế kế hoạch bài dạy</h3>
           </div>
-          <h3>Thiết kế kế hoạch bài dạy</h3>
           <p>Lên kế hoạch bài dạy bài bản theo định hướng phát triển năng lực, tích hợp phương pháp dạy học tích cực phù hợp với từng đối tượng học sinh.</p>
         </div>
 
@@ -1017,7 +1189,7 @@
       <div class="exp-cards">
 
         <!-- Thẻ Nghiên cứu -->
-        <div class="exp-card">
+        <div class="exp-card" data-scroll="flip">
           <div class="exp-header">
             <div class="exp-icon">
               <i class="fa-solid fa-microscope"></i>
@@ -1033,7 +1205,7 @@
         </div>
 
         <!-- Thẻ Giảng dạy -->
-        <div class="exp-card">
+        <div class="exp-card" data-scroll="flip">
           <div class="exp-header">
             <div class="exp-icon">
               <i class="fa-solid fa-person-chalkboard"></i>
@@ -1062,7 +1234,7 @@
       <div class="goals-cards">
 
         <!-- Thẻ Mục tiêu -->
-        <div class="goal-card">
+        <div class="goal-card" data-scroll="blur">
           <div class="goal-header">
             <div class="goal-icon">
               <i class="fa-solid fa-bullseye"></i>
@@ -1080,7 +1252,7 @@
         </div>
 
         <!-- Thẻ Định hướng -->
-        <div class="goal-card">
+        <div class="goal-card" data-scroll="blur">
           <div class="goal-header">
             <div class="goal-icon">
               <i class="fa-solid fa-road"></i>
@@ -1117,9 +1289,9 @@
           target="_blank"
           rel="noopener noreferrer"
           class="contact-item"
+          data-scroll="stagger"
         >
           <div class="ci-icon">
-            <!-- Icon Zalo dùng chữ thay thế vì FA không có icon Zalo -->
             <i class="fa-solid fa-comment-dots"></i>
           </div>
           <div class="ci-label">Chat Zalo</div>
@@ -1127,7 +1299,7 @@
         </a>
 
         <!-- Điện thoại -->
-        <a href="tel:0865048256" class="contact-item">
+        <a href="tel:0865048256" class="contact-item" data-scroll="stagger">
           <div class="ci-icon">
             <i class="fa-solid fa-phone"></i>
           </div>
@@ -1136,7 +1308,7 @@
         </a>
 
         <!-- Email -->
-        <a href="mailto:Pabinh5642@gmail.com" class="contact-item">
+        <a href="mailto:Pabinh5642@gmail.com" class="contact-item" data-scroll="stagger">
           <div class="ci-icon">
             <i class="fa-solid fa-envelope"></i>
           </div>
@@ -1161,7 +1333,7 @@
 
 
   <!-- =============================================
-       JAVASCRIPT
+       JAVASCRIPT CẢI TIẾN HIỆU ỨNG & INTERACTION
   ============================================= -->
   <script>
     /* -----------------------------------------------
@@ -1191,7 +1363,6 @@
     const darkIcon   = document.getElementById('darkIcon');
     const darkLabel  = document.getElementById('darkLabel');
 
-    // Hàm cập nhật giao diện nút dark mode
     function updateDarkUI(isDark) {
       if (isDark) {
         darkIcon.className  = 'fa-solid fa-sun';
@@ -1202,14 +1373,12 @@
       }
     }
 
-    // Kiểm tra localStorage khi load trang
     const savedDark = localStorage.getItem('darkMode') === 'true';
     if (savedDark) {
       document.body.classList.add('dark-mode');
     }
     updateDarkUI(savedDark);
 
-    // Xử lý click toggle
     darkToggle.addEventListener('click', () => {
       const isDark = document.body.classList.toggle('dark-mode');
       localStorage.setItem('darkMode', isDark);
@@ -1227,38 +1396,47 @@
       mobileMenu.classList.toggle('open');
     });
 
-    // Đóng mobile menu khi click bên ngoài
     document.addEventListener('click', (e) => {
       if (!header.contains(e.target)) {
         mobileMenu.classList.remove('open');
       }
     });
 
-    // Hàm đóng mobile menu (dùng trong onclick của link)
     function closeMobile() {
       mobileMenu.classList.remove('open');
     }
 
 
     /* -----------------------------------------------
-       5. SCROLL ANIMATION – hiệu ứng khi cuộn đến
-       Áp dụng cho các thẻ có thuộc tính [data-scroll]
+       5. ADVANCED SCROLL ANIMATIONS (INTERSECTION OBSERVER)
+       Hiệu ứng xuất hiện riêng biệt & độc đáo cho từng phần
     ----------------------------------------------- */
     const scrollEls = document.querySelectorAll('[data-scroll]');
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Delay nhỏ để hiệu ứng cascade đẹp hơn
-            setTimeout(() => {
-              entry.target.classList.add('visible');
-            }, index * 120);
-            observer.unobserve(entry.target);
+            const el = entry.target;
+            const scrollType = el.getAttribute('data-scroll');
+            
+            // Xử lý delay hoặc stagger tùy theo vị trí thẻ
+            if (scrollType === 'stagger' || scrollType === 'zoom') {
+              const parent = el.parentElement;
+              const siblings = Array.from(parent.children);
+              const index = siblings.indexOf(el);
+              setTimeout(() => {
+                el.classList.add('visible');
+              }, index * 120);
+            } else {
+              el.classList.add('visible');
+            }
+
+            observer.unobserve(el);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
     );
 
     scrollEls.forEach((el) => observer.observe(el));
@@ -1266,8 +1444,6 @@
 
     /* -----------------------------------------------
        6. SMOOTH SCROLL cho tất cả anchor link
-       (CSS scroll-behavior đã xử lý nhưng JS
-        đảm bảo offset cho sticky header)
     ----------------------------------------------- */
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', function (e) {
@@ -1284,4 +1460,3 @@
 
 </body>
 </html>
-```
