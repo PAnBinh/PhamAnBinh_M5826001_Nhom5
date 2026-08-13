@@ -1,0 +1,1290 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phạm An Bình – Giáo viên & Gia sư Toán</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* =============================================
+       BIẾN CSS – DỄ THAY ĐỔI MÀU SẮC Ở ĐÂY
+    ============================================= */
+    :root {
+      --primary:       #1a3a6b;   /* Xanh navy đậm */
+      --primary-light: #2a5298;
+      --accent:        #f97316;   /* Cam highlight */
+      --accent-hover:  #ea6c0a;
+      --bg:            #f8fafc;
+      --bg-card:       #ffffff;
+      --text-main:     #1e293b;
+      --text-muted:    #64748b;
+      --border:        #e2e8f0;
+      --shadow:        0 4px 24px rgba(26,58,107,.10);
+      --shadow-hover:  0 12px 36px rgba(26,58,107,.18);
+      --radius:        14px;
+      --transition:    .35s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* Dark Mode – biến ghi đè */
+    body.dark-mode {
+      --bg:         #0f172a;
+      --bg-card:    #1e293b;
+      --text-main:  #f1f5f9;
+      --text-muted: #94a3b8;
+      --border:     #334155;
+      --shadow:     0 4px 24px rgba(0,0,0,.35);
+      --shadow-hover:0 12px 36px rgba(0,0,0,.55);
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+
+    a { text-decoration: none; color: inherit; }
+
+    img { max-width: 100%; display: block; }
+
+    /* Tiêu đề section chung */
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+    body.dark-mode .section-title { color: #7eb3ff; }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      font-size: .95rem;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 56px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: .5rem auto 0;
+    }
+
+    section { padding: 80px 0; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* =============================================
+       STICKY HEADER / NAVIGATION
+    ============================================= */
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 18px 0;
+      transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
+    }
+
+    /* Khi cuộn xuống thêm nền mờ */
+    #header.scrolled {
+      background: rgba(248,250,252,.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 16px rgba(26,58,107,.10);
+      padding: 10px 0;
+    }
+    body.dark-mode #header.scrolled {
+      background: rgba(15,23,42,.92);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--primary);
+      letter-spacing: -.5px;
+    }
+    body.dark-mode .nav-logo { color: #7eb3ff; }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text-main);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Dark mode toggle */
+    #darkToggle {
+      background: none;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      padding: 6px 14px;
+      cursor: pointer;
+      color: var(--text-main);
+      font-size: .85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    #darkToggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Hamburger (mobile) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 10px 24px;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--text-main);
+      transition: color var(--transition), background var(--transition);
+    }
+    .mobile-menu a:hover { color: var(--accent); background: var(--border); }
+
+    /* =============================================
+       1. HERO SECTION
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      /* Gradient tinh tế xanh navy → trắng */
+      background: linear-gradient(135deg, #e8f0fe 0%, #f8fafc 50%, #fef3e8 100%);
+      padding-top: 90px;
+      position: relative;
+      overflow: hidden;
+    }
+    body.dark-mode #hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #1a1a2e 100%);
+    }
+
+    /* Pattern dots tinh tế */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(26,58,107,.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+    }
+
+    /* Hiệu ứng fade-in khi load */
+    .hero-text {
+      flex: 1;
+      opacity: 0;
+      transform: translateY(28px);
+      animation: fadeInUp .9s .2s forwards;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(249,115,22,.12);
+      color: var(--accent);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .5px;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      color: var(--primary);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    body.dark-mode .hero-text h1 { color: #a5c8ff; }
+
+    .hero-text .tagline {
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* Nút CTA chính */
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 16px rgba(26,58,107,.25);
+    }
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(26,58,107,.35);
+    }
+
+    /* Nút CTA phụ */
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 16px rgba(249,115,22,.3);
+    }
+    .btn-accent:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(249,115,22,.45);
+    }
+
+    /* Ảnh đại diện bên phải */
+    .hero-image {
+      flex: 0 0 auto;
+      opacity: 0;
+      transform: scale(.9);
+      animation: fadeInScale .9s .4s forwards;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 280px; height: 280px;
+    }
+    /* Vòng trang trí */
+    .avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) 0%, var(--primary) 50%, var(--accent) 100%);
+      animation: spinSlow 8s linear infinite;
+    }
+    .avatar-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: var(--bg);
+    }
+
+    .avatar-wrap img {
+      position: relative;
+      z-index: 1;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--bg-card);
+    }
+
+    /* Thông tin nhỏ góc avatar */
+    .avatar-info {
+      position: absolute;
+      bottom: 10px; right: -18px;
+      z-index: 2;
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 8px 14px;
+      box-shadow: var(--shadow);
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--primary);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    body.dark-mode .avatar-info { color: #7eb3ff; }
+    .avatar-info i { color: var(--accent); }
+
+    /* =============================================
+       2. GIỚI THIỆU
+    ============================================= */
+    #about { background: var(--bg-card); }
+
+    .about-text {
+      max-width: 760px;
+      margin: 0 auto 3rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.85;
+    }
+
+    .edu-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .edu-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      /* Scroll animation – ẩn ban đầu */
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .edu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .6s ease, transform .6s ease, box-shadow var(--transition);
+    }
+    .edu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px; height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      border-radius: 3px 0 0 3px;
+    }
+
+    .edu-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+
+    .edu-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    body.dark-mode .edu-card h3 { color: #7eb3ff; }
+
+    .edu-card p {
+      font-size: .88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .edu-badge {
+      display: inline-block;
+      margin-top: 10px;
+      background: rgba(249,115,22,.12);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+
+    /* =============================================
+       3. KỸ NĂNG
+    ============================================= */
+    #skills { background: var(--bg); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      cursor: default;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
+    }
+    .skill-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-light);
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
+    }
+    body.dark-mode .skill-card:hover {
+      background: linear-gradient(135deg, #1e2d47, #1e293b);
+    }
+
+    .skill-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .skill-card h3 {
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    body.dark-mode .skill-card h3 { color: #a5c8ff; }
+
+    .skill-card p {
+      font-size: .84rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* =============================================
+       4. KINH NGHIỆM
+    ============================================= */
+    #experience { background: var(--bg-card); }
+
+    .exp-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .exp-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px 26px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .exp-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .exp-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .exp-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .exp-header h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    body.dark-mode .exp-header h3 { color: #7eb3ff; }
+
+    .exp-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .exp-card ul li {
+      display: flex;
+      gap: 10px;
+      font-size: .9rem;
+      color: var(--text-muted);
+    }
+    .exp-card ul li::before {
+      content: '\f058';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* =============================================
+       5. MỤC TIÊU & ĐỊNH HƯỚNG
+    ============================================= */
+    #goals { background: var(--bg); }
+
+    .goals-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .goal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px 26px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .goal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .goal-card .goal-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .goal-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #fb923c);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .goal-card h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    body.dark-mode .goal-card h3 { color: #7eb3ff; }
+
+    .goal-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .goal-card ul li {
+      display: flex;
+      gap: 10px;
+      font-size: .9rem;
+      color: var(--text-muted);
+    }
+    .goal-card ul li::before {
+      content: '\f00c';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* =============================================
+       6. LIÊN HỆ
+    ============================================= */
+    #contact {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: #fff;
+      padding: 80px 0;
+    }
+
+    #contact .section-title { color: #fff; }
+    #contact .section-title::after { background: var(--accent); }
+    #contact .section-subtitle { color: rgba(255,255,255,.75); }
+
+    .contact-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 0;
+    }
+
+    .contact-item {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
+      min-width: 180px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #fff;
+    }
+    .contact-item:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,.22);
+      box-shadow: 0 16px 40px rgba(0,0,0,.25);
+    }
+
+    .contact-item .ci-icon {
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      transition: background var(--transition);
+    }
+    .contact-item:hover .ci-icon {
+      background: var(--accent);
+    }
+
+    .contact-item .ci-label {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .contact-item .ci-value {
+      font-size: .85rem;
+      opacity: .8;
+    }
+
+    /* =============================================
+       7. FOOTER
+    ============================================= */
+    footer {
+      background: #0f172a;
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      padding: 22px 24px;
+      font-size: .85rem;
+    }
+    footer span { color: var(--accent); }
+
+    /* =============================================
+       KEYFRAMES
+    ============================================= */
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInScale {
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes spinSlow {
+      to { transform: rotate(360deg); }
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    /* Tablet */
+    @media (max-width: 900px) {
+      .hero-inner { flex-direction: column-reverse; text-align: center; }
+      .hero-text .tagline { margin-left: auto; margin-right: auto; }
+      .hero-btns { justify-content: center; }
+      .avatar-wrap { width: 220px; height: 220px; }
+      .avatar-info { right: -8px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      section { padding: 56px 0; }
+      .avatar-wrap { width: 180px; height: 180px; }
+      .avatar-info { display: none; }
+      .edu-cards, .exp-cards, .goals-cards { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .contact-cards { flex-direction: column; align-items: center; }
+      .contact-item { width: 100%; max-width: 320px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =============================================
+       HEADER / NAVIGATION
+  ============================================= -->
+  <header id="header">
+    <div class="container">
+      <nav class="nav-inner">
+        <!-- Logo -->
+        <a href="#hero" class="nav-logo">Phạm An Bình</a>
+
+        <!-- Menu desktop -->
+        <ul class="nav-links">
+          <li><a href="#about">Giới thiệu</a></li>
+          <li><a href="#skills">Kỹ năng</a></li>
+          <li><a href="#experience">Kinh nghiệm</a></li>
+          <li><a href="#goals">Mục tiêu</a></li>
+          <li><a href="#contact">Liên hệ</a></li>
+        </ul>
+
+        <div style="display:flex;align-items:center;gap:12px;">
+          <!-- Nút dark mode -->
+          <button id="darkToggle" title="Chuyển chế độ tối/sáng">
+            <i class="fa-solid fa-moon" id="darkIcon"></i>
+            <span id="darkLabel">Tối</span>
+          </button>
+
+          <!-- Hamburger mobile -->
+          <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Menu mobile -->
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="#about"      onclick="closeMobile()">Giới thiệu</a>
+        <a href="#skills"     onclick="closeMobile()">Kỹ năng</a>
+        <a href="#experience" onclick="closeMobile()">Kinh nghiệm</a>
+        <a href="#goals"      onclick="closeMobile()">Mục tiêu</a>
+        <a href="#contact"    onclick="closeMobile()">Liên hệ</a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- =============================================
+       1. HERO SECTION
+  ============================================= -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Nội dung bên trái -->
+        <div class="hero-text">
+          <div class="hero-badge">
+            <i class="fa-solid fa-chalkboard-teacher"></i> Giáo viên &amp; Gia sư Toán
+          </div>
+
+          <!-- Tên lớn -->
+          <h1>Phạm An Bình</h1>
+
+          <!-- Tagline -->
+          <p class="tagline">
+            Cử nhân Sư phạm Toán học – Đại học Cần Thơ · Học viên Cao học Toán ứng dụng.
+            Đam mê truyền đạt tri thức, khơi dậy tình yêu Toán học nơi học sinh.
+          </p>
+
+          <!-- 2 nút CTA -->
+          <div class="hero-btns">
+            <!-- Cuộn xuống section học vấn (#about) -->
+            <a href="#about" class="btn-primary">
+              <i class="fa-solid fa-eye"></i> Xem thêm
+            </a>
+            <!-- Cuộn xuống form liên hệ (#contact) -->
+            <a href="#contact" class="btn-accent">
+              <i class="fa-solid fa-paper-plane"></i> Liên hệ ngay
+            </a>
+          </div>
+        </div>
+
+        <!-- Ảnh đại diện bên phải -->
+        <div class="hero-image">
+          <div class="avatar-wrap">
+            <!--
+              THAY ẢNH: Thay URL dưới đây bằng đường dẫn ảnh thật của bạn
+              Ví dụ: src="images/avatar.jpg"
+            -->
+            <img
+              src="https://placehold.co/280x280/1a3a6b/ffffff?text=P.A.B"
+              alt="Ảnh đại diện Phạm An Bình"
+            />
+
+            <!-- Thẻ thông tin nhỏ -->
+            <div class="avatar-info">
+              <i class="fa-solid fa-star"></i> GPA 3.63 / 4.0
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       2. GIỚI THIỆU
+  ============================================= -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">Giới thiệu</h2>
+      <p class="section-subtitle">Đôi nét về bản thân</p>
+
+      <!-- Đoạn giới thiệu bản thân -->
+      <p class="about-text">
+        Tôi là Phạm An Bình – giáo viên &amp; gia sư Toán với niềm đam mê cháy bỏng
+        với việc truyền đạt tri thức và nuôi dưỡng tư duy logic cho thế hệ trẻ.
+        Tốt nghiệp loại Xuất sắc ngành Sư phạm Toán học tại Đại học Cần Thơ, tôi
+        không ngừng học hỏi và hiện đang theo học Chương trình Cao học Toán ứng dụng
+        để nâng cao năng lực chuyên môn. Với phương châm "Toán học không khó — chỉ
+        cần đúng phương pháp", tôi luôn cố gắng xây dựng môi trường học tập thân
+        thiện, truyền cảm hứng và hiệu quả, giúp mỗi học sinh tự tin chinh phục
+        Toán học.
+      </p>
+
+      <!-- Thẻ thông tin học vấn – có hiệu ứng khi cuộn đến -->
+      <div class="edu-cards">
+
+        <!-- Thẻ Đại học -->
+        <div class="edu-card" data-scroll>
+          <div class="edu-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <h3>Cử nhân Sư phạm Toán học</h3>
+          <p>
+            <strong>Đại học Cần Thơ</strong><br />
+            Niên khóa: 2021 – 2025<br />
+            Xếp loại: <strong>Xuất sắc</strong> &nbsp;|&nbsp; GPA: <strong>3.63 / 4.0</strong>
+          </p>
+          <span class="edu-badge"><i class="fa-solid fa-award"></i> Tốt nghiệp Xuất sắc</span>
+        </div>
+
+        <!-- Thẻ Cao học -->
+        <div class="edu-card" data-scroll>
+          <div class="edu-icon" style="background: linear-gradient(135deg, var(--accent), #fb923c);">
+            <i class="fa-solid fa-book-open-reader"></i>
+          </div>
+          <h3>Học viên Cao học – Toán ứng dụng</h3>
+          <p>
+            <strong>Đại học Cần Thơ</strong><br />
+            Niên khóa: 2026 – 2028<br />
+            Chuyên ngành: <strong>Toán ứng dụng</strong>
+          </p>
+          <span class="edu-badge" style="background:rgba(26,58,107,.1);color:var(--primary);">
+            <i class="fa-solid fa-flask"></i> Đang theo học
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       3. KỸ NĂNG CHUYÊN MÔN
+  ============================================= -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Kỹ năng chuyên môn</h2>
+      <p class="section-subtitle">Những năng lực tôi đã tích lũy và phát triển</p>
+
+      <div class="skills-grid">
+
+        <!-- Kỹ năng 1: Tin học căn bản -->
+        <div class="skill-card">
+          <div class="skill-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+            <i class="fa-solid fa-computer"></i>
+          </div>
+          <h3>Tin học căn bản</h3>
+          <p>Chứng chỉ Tin học căn bản. Thành thạo các công cụ văn phòng Word, Excel, PowerPoint phục vụ soạn thảo và quản lý tài liệu giáo dục.</p>
+        </div>
+
+        <!-- Kỹ năng 2: Tiếng Anh -->
+        <div class="skill-card">
+          <div class="skill-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+            <i class="fa-solid fa-language"></i>
+          </div>
+          <h3>Tiếng Anh B1 (Bậc 3)</h3>
+          <p>Chứng chỉ Tiếng Anh B1 theo khung năng lực ngoại ngữ. Có khả năng đọc hiểu tài liệu chuyên ngành Toán bằng tiếng Anh.</p>
+        </div>
+
+        <!-- Kỹ năng 3: Tư duy & Kỹ năng mềm -->
+        <div class="skill-card">
+          <div class="skill-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h3>Tư duy &amp; Kỹ năng mềm</h3>
+          <p>Tư duy logic sắc bén, diễn đạt rõ ràng, làm việc nhóm hiệu quả và có tinh thần trách nhiệm cao trong mọi công việc.</p>
+        </div>
+
+        <!-- Kỹ năng 4: Ứng dụng CNTT -->
+        <div class="skill-card">
+          <div class="skill-icon" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+            <i class="fa-solid fa-chalkboard"></i>
+          </div>
+          <h3>Ứng dụng CNTT vào giảng dạy</h3>
+          <p>Sử dụng thành thạo GeoGebra, PowerPoint, các nền tảng học trực tuyến để thiết kế bài giảng sinh động và quản lý lớp học hiệu quả.</p>
+        </div>
+
+        <!-- Kỹ năng 5 (gợi ý): Soạn thảo đề kiểm tra & đánh giá -->
+        <div class="skill-card">
+          <div class="skill-icon" style="background: linear-gradient(135deg, #ec4899, #be185d);">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </div>
+          <h3>Soạn đề &amp; Đánh giá học sinh</h3>
+          <p>Có kinh nghiệm xây dựng ma trận đề, soạn đề kiểm tra đa dạng theo chuẩn chương trình THCS và THPT, đánh giá năng lực học sinh khách quan.</p>
+        </div>
+
+        <!-- Kỹ năng 6 (gợi ý): Thiết kế kế hoạch bài dạy -->
+        <div class="skill-card">
+          <div class="skill-icon" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <h3>Thiết kế kế hoạch bài dạy</h3>
+          <p>Lên kế hoạch bài dạy bài bản theo định hướng phát triển năng lực, tích hợp phương pháp dạy học tích cực phù hợp với từng đối tượng học sinh.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       4. KINH NGHIỆM
+  ============================================= -->
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-title">Kinh nghiệm</h2>
+      <p class="section-subtitle">Hành trình nghiên cứu &amp; giảng dạy của tôi</p>
+
+      <div class="exp-cards">
+
+        <!-- Thẻ Nghiên cứu -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-icon">
+              <i class="fa-solid fa-microscope"></i>
+            </div>
+            <h3>Nghiên cứu</h3>
+          </div>
+          <ul>
+            <li>Điểm mạnh ở mảng <strong>Hình học</strong> và <strong>Đại số sơ cấp</strong>.</li>
+            <li>
+              Luận văn tốt nghiệp xếp loại <strong>Xuất sắc</strong> với đề tài:<br />
+              <em>"Giải các bài toán quỹ tích điểm với sự hỗ trợ của phần mềm GeoGebra"</em>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Thẻ Giảng dạy -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-icon">
+              <i class="fa-solid fa-person-chalkboard"></i>
+            </div>
+            <h3>Giảng dạy</h3>
+          </div>
+          <ul>
+            <li>Thực tập giảng dạy và công tác chủ nhiệm lớp ở cấp <strong>THPT</strong>.</li>
+            <li>Gia sư Toán cho học sinh ở cấp <strong>THCS</strong> và <strong>THPT</strong>.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       5. MỤC TIÊU & ĐỊNH HƯỚNG NGHỀ NGHIỆP
+  ============================================= -->
+  <section id="goals">
+    <div class="container">
+      <h2 class="section-title">Mục tiêu &amp; Định hướng nghề nghiệp</h2>
+      <p class="section-subtitle">Con đường tôi đang và sẽ đi</p>
+
+      <div class="goals-cards">
+
+        <!-- Thẻ Mục tiêu -->
+        <div class="goal-card">
+          <div class="goal-header">
+            <div class="goal-icon">
+              <i class="fa-solid fa-bullseye"></i>
+            </div>
+            <h3>Mục tiêu</h3>
+          </div>
+          <ul>
+            <li>Hoàn thành chương trình <strong>Cao học</strong> ngành Toán ứng dụng tại Đại học Cần Thơ.</li>
+            <li>
+              Nắm vững, học tập trau dồi kiến thức và kỹ năng về chuyên môn cũng như
+              biết vận dụng, kết hợp các lĩnh vực khác để tạo nền tảng vững chắc
+              phục vụ cho công việc sau này.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Thẻ Định hướng -->
+        <div class="goal-card">
+          <div class="goal-header">
+            <div class="goal-icon">
+              <i class="fa-solid fa-road"></i>
+            </div>
+            <h3>Định hướng</h3>
+          </div>
+          <ul>
+            <li>
+              Làm việc trong môi trường <strong>Giáo dục</strong>, trở thành
+              <strong>Giáo viên Toán cấp THPT</strong> chuyên nghiệp, tâm huyết
+              và có tầm ảnh hưởng tích cực đến học sinh.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       6. LIÊN HỆ
+  ============================================= -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Liên hệ với tôi</h2>
+      <p class="section-subtitle">Tôi luôn sẵn sàng kết nối &amp; hợp tác</p>
+
+      <div class="contact-cards">
+
+        <!-- Zalo -->
+        <a
+          href="https://zalo.me/0865048256"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-item"
+        >
+          <div class="ci-icon">
+            <!-- Icon Zalo dùng chữ thay thế vì FA không có icon Zalo -->
+            <i class="fa-solid fa-comment-dots"></i>
+          </div>
+          <div class="ci-label">Chat Zalo</div>
+          <div class="ci-value">0865 048 256</div>
+        </a>
+
+        <!-- Điện thoại -->
+        <a href="tel:0865048256" class="contact-item">
+          <div class="ci-icon">
+            <i class="fa-solid fa-phone"></i>
+          </div>
+          <div class="ci-label">Gọi điện thoại</div>
+          <div class="ci-value">0865 048 256</div>
+        </a>
+
+        <!-- Email -->
+        <a href="mailto:Pabinh5642@gmail.com" class="contact-item">
+          <div class="ci-icon">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="ci-label">Email</div>
+          <div class="ci-value">Pabinh5642@gmail.com</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       7. FOOTER
+  ============================================= -->
+  <footer>
+    <p>
+      &copy; <span id="currentYear"></span>
+      <span>Phạm An Bình</span>. All rights reserved.
+    </p>
+  </footer>
+
+
+  <!-- =============================================
+       JAVASCRIPT
+  ============================================= -->
+  <script>
+    /* -----------------------------------------------
+       1. NĂM HIỆN TẠI trong Footer
+    ----------------------------------------------- */
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+
+    /* -----------------------------------------------
+       2. STICKY HEADER – đổi background khi cuộn
+    ----------------------------------------------- */
+    const header = document.getElementById('header');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+
+    /* -----------------------------------------------
+       3. DARK MODE TOGGLE + lưu vào localStorage
+    ----------------------------------------------- */
+    const darkToggle = document.getElementById('darkToggle');
+    const darkIcon   = document.getElementById('darkIcon');
+    const darkLabel  = document.getElementById('darkLabel');
+
+    // Hàm cập nhật giao diện nút dark mode
+    function updateDarkUI(isDark) {
+      if (isDark) {
+        darkIcon.className  = 'fa-solid fa-sun';
+        darkLabel.textContent = 'Sáng';
+      } else {
+        darkIcon.className  = 'fa-solid fa-moon';
+        darkLabel.textContent = 'Tối';
+      }
+    }
+
+    // Kiểm tra localStorage khi load trang
+    const savedDark = localStorage.getItem('darkMode') === 'true';
+    if (savedDark) {
+      document.body.classList.add('dark-mode');
+    }
+    updateDarkUI(savedDark);
+
+    // Xử lý click toggle
+    darkToggle.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', isDark);
+      updateDarkUI(isDark);
+    });
+
+
+    /* -----------------------------------------------
+       4. HAMBURGER MENU (mobile)
+    ----------------------------------------------- */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    // Đóng mobile menu khi click bên ngoài
+    document.addEventListener('click', (e) => {
+      if (!header.contains(e.target)) {
+        mobileMenu.classList.remove('open');
+      }
+    });
+
+    // Hàm đóng mobile menu (dùng trong onclick của link)
+    function closeMobile() {
+      mobileMenu.classList.remove('open');
+    }
+
+
+    /* -----------------------------------------------
+       5. SCROLL ANIMATION – hiệu ứng khi cuộn đến
+       Áp dụng cho các thẻ có thuộc tính [data-scroll]
+    ----------------------------------------------- */
+    const scrollEls = document.querySelectorAll('[data-scroll]');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            // Delay nhỏ để hiệu ứng cascade đẹp hơn
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, index * 120);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    scrollEls.forEach((el) => observer.observe(el));
+
+
+    /* -----------------------------------------------
+       6. SMOOTH SCROLL cho tất cả anchor link
+       (CSS scroll-behavior đã xử lý nhưng JS
+        đảm bảo offset cho sticky header)
+    ----------------------------------------------- */
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const headerH = header.offsetHeight + 10;
+          const top = target.getBoundingClientRect().top + window.scrollY - headerH;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+```
