@@ -506,6 +506,16 @@
       font-weight: 600;
     }
 
+    /* Style tùy chỉnh riêng cho badge Đang theo học nổi bật ở dark mode */
+    .edu-badge-studying {
+      background: rgba(13, 148, 136, 0.2);
+      color: #0d9488;
+    }
+    body.dark-mode .edu-badge-studying {
+      background: #0d9488;
+      color: #ffffff !important;
+    }
+
     /* =============================================
        3. KỸ NĂNG CHUYÊN MÔN (Bố cục 6 thẻ độc đáo)
     ============================================= */
@@ -1087,7 +1097,7 @@
             Niên khóa: 2026 – 2028<br />
             Chuyên ngành: <strong>Toán ứng dụng</strong>
           </p>
-          <span class="edu-badge" style="background:rgba(26,58,107,.1);color:var(--primary);">
+          <span class="edu-badge edu-badge-studying">
             <i class="fa-solid fa-flask"></i> <strong>Đang theo học</strong>
           </span>
         </div>
