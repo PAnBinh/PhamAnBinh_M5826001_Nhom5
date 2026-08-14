@@ -20,8 +20,8 @@
     :root {
       --primary:       #1a3a6b;   /* Xanh navy đậm */
       --primary-light: #2a5298;
-      --accent:        #f97316;   /* Cam highlight */
-      --accent-hover:  #ea6c0a;
+      --accent:        #0d9488;   /* Xanh ngọc (Teal / Turquoise) */
+      --accent-hover:  #0f766e;
       --bg:            #f8fafc;
       --bg-card:       #ffffff;
       --text-main:     #1e293b;
@@ -231,20 +231,20 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      background: linear-gradient(135deg, #e8f0fe 0%, #f8fafc 50%, #fef3e8 100%);
+      background: linear-gradient(135deg, #e6f4f1 0%, #f8fafc 50%, #ccfbf1 100%);
       padding-top: 90px;
       position: relative;
       overflow: hidden;
     }
     body.dark-mode #hero {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #1a1a2e 100%);
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #113136 100%);
     }
 
     #hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(circle, rgba(26,58,107,.07) 1px, transparent 1px);
+      background-image: radial-gradient(circle, rgba(13,148,136,.08) 1px, transparent 1px);
       background-size: 28px 28px;
       pointer-events: none;
     }
@@ -265,7 +265,7 @@
 
     .hero-badge {
       display: inline-block;
-      background: rgba(249,115,22,.12);
+      background: rgba(13,148,136,.12);
       color: var(--accent);
       padding: 5px 14px;
       border-radius: 50px;
@@ -331,12 +331,12 @@
       align-items: center;
       gap: 8px;
       transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-      box-shadow: 0 4px 16px rgba(249,115,22,.3);
+      box-shadow: 0 4px 16px rgba(13,148,136,.3);
     }
     .btn-accent:hover {
       background: var(--accent-hover);
       transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(249,115,22,.45);
+      box-shadow: 0 8px 24px rgba(13,148,136,.45);
     }
 
     /* Ảnh đại diện với Floating & Tilt Animation */
@@ -498,7 +498,7 @@
     .edu-badge {
       display: inline-block;
       margin-top: 12px;
-      background: rgba(249,115,22,.12);
+      background: rgba(13,148,136,.12);
       color: var(--accent);
       padding: 4px 12px;
       border-radius: 50px;
@@ -572,7 +572,7 @@
     .skill-card:hover {
       transform: translateY(-8px) !important;
       box-shadow: 0 16px 36px rgba(26,58,107,.14);
-      border-color: rgba(249,115,22,0.4);
+      border-color: rgba(13,148,136,0.4);
     }
     .skill-card:hover::after {
       opacity: 1;
@@ -743,12 +743,12 @@
     .goal-icon {
       width: 54px; height: 54px;
       border-radius: 16px;
-      background: linear-gradient(135deg, var(--accent), #fb923c);
+      background: linear-gradient(135deg, var(--accent), #2dd4bf);
       display: flex; align-items: center; justify-content: center;
       color: #fff;
       font-size: 1.35rem;
       flex-shrink: 0;
-      box-shadow: 0 6px 16px rgba(249,115,22,.25);
+      box-shadow: 0 6px 16px rgba(13,148,136,.25);
       transition: transform 0.4s ease;
     }
     .goal-card:hover .goal-icon {
@@ -1078,7 +1078,7 @@
 
         <!-- Thẻ Cao học -->
         <div class="edu-card" data-scroll="slide-right">
-          <div class="edu-icon" style="background: linear-gradient(135deg, var(--accent), #fb923c);">
+          <div class="edu-icon" style="background: linear-gradient(135deg, var(--accent), #2dd4bf);">
             <i class="fa-solid fa-book-open-reader"></i>
           </div>
           <h3>Học viên Cao học – Toán ứng dụng</h3>
@@ -1143,7 +1143,7 @@
         <!-- Kỹ năng 4: Ứng dụng CNTT -->
         <div class="skill-card" data-scroll="zoom">
           <div class="skill-top">
-            <div class="skill-icon" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+            <div class="skill-icon" style="background: linear-gradient(135deg, #0d9488, #0f766e);">
               <i class="fa-solid fa-chalkboard"></i>
             </div>
             <h3>Ứng dụng CNTT vào giảng dạy</h3>
@@ -1279,7 +1279,7 @@
   <section id="contact">
     <div class="container">
       <h2 class="section-title">Liên hệ với tôi</h2>
-      <p class="section-subtitle">Tôi luôn sẵn sàng kết nối &amp; trao đổi</p>
+      <p class="section-subtitle">Tôi luôn sẵn sàng kết nối &amp; hợp tác</p>
 
       <div class="contact-cards">
 
